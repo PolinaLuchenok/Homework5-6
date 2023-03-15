@@ -18,6 +18,7 @@ public class TestFilterHairdryers {
 	
 	private static ChromeOptions chromeOptions = new ChromeOptions();
 	private static WebDriver driver;
+	private String ELEMENT_PATTERN = "//div[@class='schema-product__title']//span[contains(text(), '%s')]";
 	
 	@Test
 	public void testFilterBrand() {
@@ -31,9 +32,9 @@ public class TestFilterHairdryers {
         driver.findElement(By.xpath("//input[@value='rowenta']/following-sibling::span")).click();
         
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.urlToBe("https://catalog.onliner.by/hairdryer?mfr%5B0%5D=rowenta"));
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(ELEMENT_PATTERN, "Rowenta")), 30));
         
-        List<WebElement> listElements = driver.findElements(By.xpath("//div[@class='schema-product__title']//span[contains(text(), 'Rowenta')]"));
+        List<WebElement> listElements = driver.findElements(By.xpath("//div[@class='schema-product__title']//span"));
         for (WebElement ellemm : listElements) {
         	Assertions.assertTrue(ellemm.getText().contains("Rowenta"));
         }
@@ -55,7 +56,7 @@ public class TestFilterHairdryers {
         driver.findElement(By.xpath("//div[@class='schema-filter-popover__column-item']//span[text()='Braun']")).click();
         
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.urlToBe("https://catalog.onliner.by/hairdryer?mfr%5B0%5D=dyson&mfr%5B1%5D=braun"));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(String.format(ELEMENT_PATTERN, "Braun")), 1));
         
         List<WebElement> listElements = driver.findElements(By.xpath("//div[@class='schema-product__title']//span"));
         for (WebElement ellemm : listElements) {
