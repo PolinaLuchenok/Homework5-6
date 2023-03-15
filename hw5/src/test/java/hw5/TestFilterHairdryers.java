@@ -38,7 +38,6 @@ public class TestFilterHairdryers {
         for (WebElement ellemm : listElements) {
         	Assertions.assertTrue(ellemm.getText().contains("Rowenta"));
         }
-        
         driver.quit();
 	}
 	
@@ -62,7 +61,6 @@ public class TestFilterHairdryers {
         for (WebElement ellemm : listElements) {
         	Assertions.assertTrue(ellemm.getText().contains("Dyson") || ellemm.getText().contains("Braun"));
         }
-        
         driver.quit();
 	}
 }
