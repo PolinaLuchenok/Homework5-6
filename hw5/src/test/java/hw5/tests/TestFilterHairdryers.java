@@ -1,4 +1,4 @@
-package hw5;
+package hw5.tests;
 
 import java.util.List;
 
@@ -28,8 +28,10 @@ public class TestFilterHairdryers {
         
         driver.get("https://onliner.by");
         driver.findElement(By.xpath("//span[text()='Фены']")).click();
-        ((JavascriptExecutor)driver).executeScript("window.scrollBy(0, 250)");
-        driver.findElement(By.xpath("//input[@value='rowenta']/following-sibling::span")).click();
+        
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("window.scrollBy(0, 250)");
+		js.executeScript("arguments[0].click()", driver.findElement(By.xpath("//input[@value='rowenta']/following-sibling::span")));
         
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(ELEMENT_PATTERN, "Rowenta")), 30));
@@ -49,9 +51,12 @@ public class TestFilterHairdryers {
         
         driver.get("https://onliner.by");
         driver.findElement(By.xpath("//span[text()='Фены']")).click();
-        ((JavascriptExecutor)driver).executeScript("window.scrollBy(0, 350)");
+        
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("window.scrollBy(0, 350)");
         driver.findElement(By.xpath("//input[@value='dyson']/following-sibling::span")).click();
-        driver.findElement(By.xpath("//div[@class='schema-filter-control__item']")).click();
+		js.executeScript("arguments[0].click()", driver.findElement(By.xpath("//div[@class='schema-filter-control__item']")));
+        
         driver.findElement(By.xpath("//div[@class='schema-filter-popover__column-item']//span[text()='Braun']")).click();
         
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
